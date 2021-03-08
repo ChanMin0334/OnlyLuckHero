@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
 public class CameraResolution : MonoBehaviour
-{ 
-    /// <summary> 
-    /// 해당 스크립트를 각각의 카메라에 추가 
-    /// 에디터 Screen Match Mode 를 Expand로 해줘야함
-    /// </summary>  
+{   
     private void Awake() 
     { 
 
@@ -28,13 +24,12 @@ public class CameraResolution : MonoBehaviour
 
         cam.rect = rt;
 
-        Screen.orientation = ScreenOrientation.Portrait;          //임시
-        Screen.orientation = ScreenOrientation.Landscape;
-
+        Screen.orientation = ScreenOrientation.Portrait;          
+        
         Screen.orientation = ScreenOrientation.AutoRotation;  
-        Screen.autorotateToPortrait = false;
+        Screen.autorotateToPortrait = true;
         Screen.autorotateToPortraitUpsideDown = false;
-        Screen.autorotateToLandscapeLeft = true;
-        Screen.autorotateToLandscapeRight = true;
+        Screen.autorotateToLandscapeLeft = false;
+        Screen.autorotateToLandscapeRight = false;
     }
 }
