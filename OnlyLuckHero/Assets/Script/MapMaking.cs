@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class MapMaking : MonoBehaviour
 {
-    int stage = 0;
+    public int stage = 0;
+    public int[] size = { 5, 50, 6, 7 };
+    int[] way = { 6, 200, 9, 12 };
+    int[] mapevent = { 3, 30, 5, 6 };
+    int[] mapshop = { 3, 50, 1, 2 };
+    public List<List<int>> Map;
     public void Awake()
     {
-        List<List<int>> Map = new List<List<int>>();
-        int[] size = { 5, 50, 6, 7 };
-        int[] way = { 6, 200, 9, 12 };
-        int[] mapevent = { 3, 30, 5, 6 };
-        int[] mapshop = { 3, 50, 1, 2 };
+        Map = new List<List<int>>();
+        
 
-        int startx = Random.Range(0, size[stage] - 1);
-        int starty = Random.Range(0, size[stage] - 1);
+        int tilex = Random.Range(0, size[stage] - 1);
+        int tiley = Random.Range(0, size[stage] - 1);
 
-       makebasicmap(size[stage], way[stage], mapevent[stage], mapshop[stage], startx, starty, Map);
+       makebasicmap(size[stage], way[stage], mapevent[stage], mapshop[stage], tilex, tiley, Map);
     }
 
-    public void makebasicmap(int size, int way, int mapevent, int mapshop, int startx, int starty, List<List<int>> Map) //비어있는 맵 만들기
+    public void makebasicmap(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map) //비어있는 맵 만들기
     {
         for (int i = 0; i < size; i++)
         {
@@ -29,9 +31,9 @@ public class MapMaking : MonoBehaviour
                 Map[i].Add(0);
             }
         }
-        mapmake(size, way, mapevent, mapshop, startx, starty, Map);
+        mapmake(size, way, mapevent, mapshop, x, y, Map);
     }
-    public void mapmake(int size, int way, int mapevent, int mapshop, int startx, int starty, List<List<int>> Map)  //가로세로의 길이, 길 개수, 이벤트등을 인자로 받는다.
+    public void mapmake(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map)  //가로세로의 길이, 길 개수, 이벤트등을 인자로 받는다.
     {
         int maptile = 0;
         bool isdirsel = false; //방향선택확인
@@ -78,7 +80,7 @@ public class MapMaking : MonoBehaviour
         {
             if (trynum > 20)
             {
-                resetpoint(size, way, mapevent, mapshop, startx, starty, Map);
+                resetpoint(size, way, mapevent, mapshop, x, y, Map);
             }
             try
             {
@@ -86,54 +88,54 @@ public class MapMaking : MonoBehaviour
                 switch (dir)
                 {
                     case 1:
-                        if (Map[startx + 1][starty] != 0)
+                        if (Map[x + 1][y] != 0)
                         {
                             trynum++;
                             break;
                         }
                         else
                         {
-                            Map[startx + 1][starty] = maptile;
-                            startx++;
+                            Map[x + 1][y] = maptile;
+                            x++;
                             isdirsel = true;
                             break;
                         }
                     case 2:
-                        if (Map[startx - 1][starty] != 0)
+                        if (Map[x - 1][y] != 0)
                         {
                             trynum++;
                             break;
                         }
                         else
                         {
-                            Map[startx - 1][starty] = maptile;
-                            startx--;
+                            Map[x - 1][y] = maptile;
+                            x--;
                             isdirsel = true;
                             break;
                         }
                     case 3:
-                        if (Map[startx][starty - 1] != 0)
+                        if (Map[x][y - 1] != 0)
                         {
                             trynum++;
                             break;
                         }
                         else
                         {
-                            Map[startx][starty - 1] = maptile;
-                            starty--;
+                            Map[x][y - 1] = maptile;
+                            y--;
                             isdirsel = true;
                             break;
                         }
                     case 4:
-                        if (Map[startx][starty + 1] != 0)
+                        if (Map[x][y + 1] != 0)
                         {
                             trynum++;
                             break;
                         }
                         else
                         {
-                            Map[startx][starty + 1] = maptile;
-                            starty++;
+                            Map[x][y + 1] = maptile;
+                            y++;
                             isdirsel = true;
                             break;
                         }
@@ -152,54 +154,47 @@ public class MapMaking : MonoBehaviour
         }
         if (way == 0 && mapevent == 0 && mapshop == 0)
         {
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    Debug.Log(Map[i][j]);
-                }
-                Debug.LogError("");
-            }
+            makestart(size, Map);
         }
         else
         {
-            mapmake(size, way, mapevent, mapshop, startx, starty, Map);   //재귀로 구현 근데 메모리 문제 심하면 리펙토링(지금 해라)
+            mapmake(size, way, mapevent, mapshop, x, y, Map);   //재귀로 구현 근데 메모리 문제 심하면 리펙토링
         }
     }
-    public void resetpoint(int size, int way, int mapevent, int mapshop, int startx, int starty, List<List<int>> Map)
+    public void resetpoint(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map)
     {
         while (true)
         {
-            startx = Random.Range(0, size - 1);
-            starty = Random.Range(0, size - 1);
+            x = Random.Range(0, size - 1);
+            y = Random.Range(0, size - 1);
             bool isconnect = false;
 
-            if (Map[startx][starty] == 0)
+            if (Map[x][y] == 0)
             {
-                if (startx - 1 > 0)
+                if (x - 1 > 0)
                 {
-                    if (Map[startx - 1][starty] != 0)
+                    if (Map[x - 1][y] != 0)
                     {
                         isconnect = true;
                     }
                 }
-                else if (startx + 1 <= size - 1)
+                else if (x + 1 <= size - 1)
                 {
-                    if (Map[startx + 1][starty] != 0)
+                    if (Map[x + 1][y] != 0)
                     {
                         isconnect = true;
                     }
                 }
-                else if (starty + 1 <= size - 1)
+                else if (y + 1 <= size - 1)
                 {
-                    if (Map[startx][starty + 1] != 0)
+                    if (Map[x][y + 1] != 0)
                     {
                         isconnect = true;
                     }
                 }
-                else if (starty - 1 > 0)
+                else if (y - 1 > 0)
                 {
-                    if (Map[startx][starty - 1] != 0)
+                    if (Map[x][y - 1] != 0)
                     {
                         isconnect = true;
                     }
@@ -219,6 +214,26 @@ public class MapMaking : MonoBehaviour
                 break;
             }
         }
-        mapmake(size, way, mapevent, mapshop, startx, starty, Map);
+        mapmake(size, way, mapevent, mapshop, x, y, Map);
+    }
+    public void makestart(int size, List<List<int>> Map)
+    {
+        bool isselect = false;
+        int startx = 0;
+        int starty = 0;
+        while (!isselect)
+        {
+            startx = Random.Range(0, size - 1);
+            starty = Random.Range(0, size - 1);
+
+            if(Map[startx][starty] != 0)
+            {
+                isselect = true;
+            }
+        }
+
+        MoveTile move = new MoveTile();
+
+        move.setting(startx, starty, size);
     }
 }
