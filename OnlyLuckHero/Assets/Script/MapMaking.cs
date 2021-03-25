@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class MapMaking : MonoBehaviour
 {
-    public int stage = 0;
-    public int[] size = { 5, 50, 6, 7 };
-    int[] way = { 6, 200, 9, 12 };
-    int[] mapevent = { 3, 30, 5, 6 };
-    int[] mapshop = { 3, 50, 1, 2 };
+    static public int stage = 0;
+    public int[] size = { 5, 10, 6, 7 };
+    int[] way = { 6, 50, 9, 12 };
+    int[] mapevent = { 3, 10, 5, 6 };
+    int[] mapshop = { 3, 5, 1, 2 };
     public List<List<int>> Map;
     public void Awake()
     {
         Map = new List<List<int>>();
         
-
         int tilex = Random.Range(0, size[stage] - 1);
         int tiley = Random.Range(0, size[stage] - 1);
 
@@ -234,6 +233,6 @@ public class MapMaking : MonoBehaviour
 
         MoveTile move = new MoveTile();
 
-        move.setting(startx, starty, size);
+        move.setting(startx, starty, size, Map);
     }
 }
