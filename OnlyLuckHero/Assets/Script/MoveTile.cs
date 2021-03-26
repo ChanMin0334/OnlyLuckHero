@@ -4,124 +4,218 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MoveTile : MonoBehaviour
-{   
-    private Sprite tileimage;
-    private Image image;
+{
     static int nowx;
     static int nowy;
     static int size;
-    MapMaking mapdata;
-    public Button leftbtn;
-    public Button rightbtn;
-    public Button upbtn;
-    public Button downbtn;
+    public Button leftBtn;
+    public Button rightBtn;
+    public Button upBtn;
+    public Button downBtn;
     static public List<List<int>> Map;
     public void setting(int x, int y, int si, List<List<int>> map)   //전역변수로 저장해줌
     {
-        //mapdata = GameObject.Find("Main Camera").GetComponent<MapMaking>();        
+        leftBtn = GameObject.Find("Left_btn").GetComponent<Button>();
+        rightBtn = GameObject.Find("Right_btn").GetComponent<Button>();
+        upBtn = GameObject.Find("Up_btn").GetComponent<Button>();
+        downBtn = GameObject.Find("Down_btn").GetComponent<Button>();
         Map = map;
-        leftbtn = GameObject.Find("Left_btn").GetComponent<Button>();
-        rightbtn = GameObject.Find("Right_btn").GetComponent<Button>();
-        upbtn = GameObject.Find("Up_btn").GetComponent<Button>();
-        downbtn = GameObject.Find("Down_btn").GetComponent<Button>();
         nowx = x;
         nowy = y;
         size = si;
         stay();
     }
-    public void stay() 
-    {   
-        Debug.Log(nowy + "/" + nowx);
+    public void stay()
+    {
+        leftBtn = GameObject.Find("Left_btn").GetComponent<Button>();
+        rightBtn = GameObject.Find("Right_btn").GetComponent<Button>();
+        upBtn = GameObject.Find("Up_btn").GetComponent<Button>();
+        downBtn = GameObject.Find("Down_btn").GetComponent<Button>();
+
+        Debug.Log(nowy + "/" + nowx);    //테스트 디버깅 코드
         var srt = "";
-        for(int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
         {
-            srt = "";
-            for(int j = 0; j< size; j++)
+            srt = "|";
+            for (int j = 0; j < size; j++)
             {
                 srt += (Map[i][j] + "|");
             }
             Debug.Log(srt);
-        }
-        leftbtn = GameObject.Find("Left_btn").GetComponent<Button>();
-        rightbtn = GameObject.Find("Right_btn").GetComponent<Button>();
-        upbtn = GameObject.Find("Up_btn").GetComponent<Button>();
-        downbtn = GameObject.Find("Down_btn").GetComponent<Button>();
-        //사진 불러오기
-        //화살표 불러오기
+        }                               //테스트 디버깅 코드
+
+        bool isLeftTile = false;
+        bool isRightTile = false;
+        bool isUpTile = false;
+        bool isDownTile = false;
 
         if (nowy - 1 >= 0)
         {
-            if (Map[nowx][nowy-1] != 0)
-            {
-                leftbtn.interactable = true;
-                //Debug.Log("왼쪽나타남");
+            if (Map[nowx][nowy - 1] != 0)
+                isLeftTile = true;
+            else
+                isLeftTile = false;
+        }
+        else
+            isLeftTile = false;
 
-            }
+        if (nowy + 1 <= size - 1)
+        {
+            if (Map[nowx][nowy + 1] != 0)
+                isRightTile = true;
             else
-            {
-                leftbtn.interactable = false;
-                //Debug.Log("왼쪽사라짐");
-            }
+                isRightTile = false;
         }
-        else if(nowy - 1 < 0)
-        {
-            leftbtn.interactable = false;
-            //Debug.Log("왼쪽사라짐");
-        }
-        if (nowy + 1 <= size-1)
-        {
-            if (Map[nowx][nowy+1] != 0)
-            {
-                rightbtn.interactable = true;
-                //Debug.Log("오른쪽나타남");
-            }
-            else
-            {
-                rightbtn.interactable = false;
-                //Debug.Log("오른쪽사라짐");
-            }
-        }
-        else if (nowy + 1 > size-1)
-        {
-            rightbtn.interactable = false;
-            //Debug.Log("오른쪽사라짐");
-        }
+        else
+            isRightTile = false;
+
         if (nowx - 1 >= 0)
         {
-            if (Map[nowx-1][nowy] != 0)
+            if (Map[nowx - 1][nowy] != 0)
+                isUpTile = true;
+            else
+                isUpTile = false;
+        }
+        else
+            isUpTile = false;
+
+        if (nowx + 1 <= size - 1)
+        {
+            if (Map[nowx + 1][nowy] != 0)
+                isDownTile = true;
+            else
+                isDownTile = false;
+        }
+        else
+            isDownTile = false;
+
+        if (isUpTile)           //위쪽버튼활성화
+        {
+            upBtn.interactable = true;
+            upBtn.gameObject.GetComponent<Image>().enabled = true;
+        }
+        else if (!isUpTile)
+        {
+            upBtn.interactable = false;   //위쪽버튼비활성화
+            upBtn.gameObject.GetComponent<Image>().enabled = false;
+        }
+
+        if (isDownTile)
+        {
+            downBtn.interactable = true; //아래버튼활성화
+            downBtn.gameObject.GetComponent<Image>().enabled = true;
+        }
+        else if (!isDownTile)
+        {
+            downBtn.interactable = false;   //아래버튼비활성화
+            downBtn.gameObject.GetComponent<Image>().enabled = false;
+        }
+
+        if (isLeftTile)
+        {
+            leftBtn.interactable = true;  // 왼쪽버튼활성화
+            leftBtn.gameObject.GetComponent<Image>().enabled = true;
+        }
+        else if (!isLeftTile)
+        {
+            leftBtn.interactable = false;   //왼쪽버튼비활성화
+            leftBtn.gameObject.GetComponent<Image>().enabled = false;
+        }
+
+        if (isRightTile)
+        {
+            rightBtn.interactable = true;  //오른쪽버튼활성화
+            rightBtn.gameObject.GetComponent<Image>().enabled = true;
+        }
+        else if (!isRightTile)
+        {
+            rightBtn.interactable = false;   //오른쪽버튼비활성화
+            rightBtn.gameObject.GetComponent<Image>().enabled = false;
+        }
+
+
+        if (isUpTile)
+        {
+            if (isRightTile)
             {
-                upbtn.interactable = true;
-                //Debug.Log("위쪽나타남");
+                if (isDownTile)
+                {
+                    if (isLeftTile)
+                    {
+                        //15번
+                    }
+                    else
+                    {
+                        //11번
+                    }
+                }
+                else if (isLeftTile)
+                {
+                    //14번
+                }
+                else
+                {
+                    //5번
+                }
+            }
+            else if (isDownTile)
+            {
+                if (isLeftTile)
+                {
+                    //13번
+                }
+                else
+                {
+                    //9번
+                }
+            }
+            else if (isLeftTile)
+            {
+                //8번
             }
             else
             {
-                upbtn.interactable = false;
-                //Debug.Log("위쪽사라짐");
-            };
+                //1번
+            }
         }
-        else if (nowx - 1 < 0)
+        else if (isDownTile)
         {
-            upbtn.interactable = false;
-            //Debug.Log("위쪽사라짐");
-        }
-        if (nowx + 1 <= size -1)
-        {
-            if (Map[nowx+1][nowy] != 0)
+            if (isRightTile)
             {
-                downbtn.interactable = true;
-                //Debug.Log("아래쪽나타남");
+                if (isLeftTile)
+                {
+                    //12번
+                }
+                else
+                {
+                    //6번
+                }
+            }
+            else if (isLeftTile)
+            {
+                //7번
             }
             else
             {
-                downbtn.interactable = false;
-                //Debug.Log("아래쪽사라짐");
+                //2번
             }
         }
-        else if (nowx + 1 > size-1)
+        else if (isLeftTile)
         {
-            downbtn.interactable = false;
-           //Debug.Log("아래쪽사라짐");
+            if (isRightTile)
+            {
+                //10번
+            }
+            else
+            {
+                //3번
+            }
         }
+        else if (isRightTile)
+        {
+            //4번
+        }
+
     }
     public void Leftmove()
     {
