@@ -3,7 +3,23 @@ guid: 6e530d52a0a48864ba168dae8743cac4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Tile1: {fileID: 2800000, guid: 66aa01b3e5c342940be9d91c644717a4, type: 3}
+  - tile2: {fileID: 2800000, guid: e57f7aace2ed3434182531988dcf0e61, type: 3}
+  - tile3: {fileID: 2800000, guid: 297fe96de4d18a64895d2076bcaf77fc, type: 3}
+  - tile4: {fileID: 2800000, guid: a0666a7ae0290924fb26fb38ab825631, type: 3}
+  - tile5: {fileID: 2800000, guid: d53c560ae7b31384ca652247a8f59272, type: 3}
+  - tile6: {fileID: 2800000, guid: b0c3020a8b210eb469476590c1f6e282, type: 3}
+  - tile7: {fileID: 2800000, guid: 54f37872bbee3a14eb2fda302481d9f5, type: 3}
+  - tile8: {fileID: 2800000, guid: 9582b5b080dd4904788f4f39c6fa62bd, type: 3}
+  - tile9: {fileID: 2800000, guid: 3ded14d2312f13445a761d9b68f7c8fc, type: 3}
+  - tile10: {fileID: 2800000, guid: 997d7c0ce4d975948ac3a52b263c4c1b, type: 3}
+  - tile11: {fileID: 2800000, guid: 73b53b62f1f62074b8bbd80c6902d22c, type: 3}
+  - tile12: {fileID: 2800000, guid: 1a88bab52af53494497da989e9f1c474, type: 3}
+  - tile13: {fileID: 2800000, guid: 9488663e8c6721e4fbb358223347a24b, type: 3}
+  - tile14: {fileID: 2800000, guid: 568cde2dfcdcd2045affaaa1f4278021, type: 3}
+  - tile15: {fileID: 2800000, guid: d4d2e1b64c1f1a043bd911c230ed90b7, type: 3}
+  - background: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

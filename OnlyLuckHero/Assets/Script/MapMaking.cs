@@ -10,6 +10,8 @@ public class MapMaking : MonoBehaviour
     int[] mapevent = { 3, 10, 5, 6 };
     int[] mapshop = { 3, 5, 1, 2 };
     public List<List<int>> Map;
+    public MoveTile move;
+
     public void Awake()
     {
         Map = new List<List<int>>();
@@ -231,7 +233,7 @@ public class MapMaking : MonoBehaviour
             }
         }
 
-        MoveTile move = new MoveTile();
+        //MoveTile move = new MoveTile();
 
         move.setting(startx, starty, size, Map);
     }

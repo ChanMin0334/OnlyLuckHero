@@ -12,7 +12,10 @@ public class MoveTile : MonoBehaviour
     public Button rightBtn;
     public Button upBtn;
     public Button downBtn;
-    static public List<List<int>> Map;
+    public static List<List<int>> Map;
+    public ChangeScreen change;
+    
+
     public void setting(int x, int y, int si, List<List<int>> map)   //전역변수로 저장해줌
     {
         leftBtn = GameObject.Find("Left_btn").GetComponent<Button>();
@@ -31,7 +34,6 @@ public class MoveTile : MonoBehaviour
         rightBtn = GameObject.Find("Right_btn").GetComponent<Button>();
         upBtn = GameObject.Find("Up_btn").GetComponent<Button>();
         downBtn = GameObject.Find("Down_btn").GetComponent<Button>();
-
         Debug.Log(nowy + "/" + nowx);    //테스트 디버깅 코드
         var srt = "";
         for (int i = 0; i < size; i++)
@@ -133,7 +135,6 @@ public class MoveTile : MonoBehaviour
             rightBtn.gameObject.GetComponent<Image>().enabled = false;
         }
 
-
         if (isUpTile)
         {
             if (isRightTile)
@@ -142,40 +143,40 @@ public class MoveTile : MonoBehaviour
                 {
                     if (isLeftTile)
                     {
-                        //15번
+                        change.changetile(15); 
                     }
                     else
                     {
-                        //11번
+                        change.changetile(11);
                     }
                 }
                 else if (isLeftTile)
                 {
-                    //14번
+                    change.changetile(14);
                 }
                 else
                 {
-                    //5번
+                    change.changetile(5);
                 }
             }
             else if (isDownTile)
             {
                 if (isLeftTile)
                 {
-                    //13번
+                    change.changetile(13);
                 }
                 else
                 {
-                    //9번
+                    change.changetile(9);
                 }
             }
             else if (isLeftTile)
             {
-                //8번
+                change.changetile(8);
             }
             else
             {
-                //1번
+                change.changetile(1);
             }
         }
         else if (isDownTile)
@@ -184,36 +185,36 @@ public class MoveTile : MonoBehaviour
             {
                 if (isLeftTile)
                 {
-                    //12번
+                    change.changetile(12);
                 }
                 else
                 {
-                    //6번
+                    change.changetile(6);
                 }
             }
             else if (isLeftTile)
             {
-                //7번
+                change.changetile(7);
             }
             else
             {
-                //2번
+                change.changetile(2);
             }
         }
         else if (isLeftTile)
         {
             if (isRightTile)
             {
-                //10번
+                change.changetile(10);
             }
             else
             {
-                //3번
+                change.changetile(3);
             }
         }
         else if (isRightTile)
         {
-            //4번
+            change.changetile(4);
         }
 
     }
