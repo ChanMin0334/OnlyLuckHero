@@ -14,9 +14,10 @@ public class MoveTile : MonoBehaviour
     public Button downBtn;
     public static List<List<int>> Map;
     public ChangeScreen change;
+    public EventSrc eventsrc;
     
 
-    public void setting(int x, int y, int si, List<List<int>> map)   //전역변수로 저장해줌
+    public void Setting(int x, int y, int si, List<List<int>> map)   //전역변수로 저장해줌
     {
         leftBtn = GameObject.Find("Left_btn").GetComponent<Button>();
         rightBtn = GameObject.Find("Right_btn").GetComponent<Button>();
@@ -26,9 +27,9 @@ public class MoveTile : MonoBehaviour
         nowx = x;
         nowy = y;
         size = si;
-        stay();
+        Stay();
     }
-    public void stay()
+    public void Stay()
     {
         leftBtn = GameObject.Find("Left_btn").GetComponent<Button>();
         rightBtn = GameObject.Find("Right_btn").GetComponent<Button>();
@@ -143,40 +144,41 @@ public class MoveTile : MonoBehaviour
                 {
                     if (isLeftTile)
                     {
-                        change.changetile(15); 
+                        change.Changetile(15); 
                     }
                     else
                     {
-                        change.changetile(11);
+                        change.Changetile(11);
                     }
                 }
                 else if (isLeftTile)
                 {
-                    change.changetile(14);
+                    change.Changetile(14);
                 }
                 else
                 {
-                    change.changetile(5);
+                    change.Changetile(5);
                 }
             }
             else if (isDownTile)
             {
                 if (isLeftTile)
                 {
-                    change.changetile(13);
+                    change.Changetile(13);
                 }
                 else
                 {
-                    change.changetile(9);
+                    change.Changetile(9);
                 }
             }
+
             else if (isLeftTile)
             {
-                change.changetile(8);
+                change.Changetile(8);
             }
             else
             {
-                change.changetile(1);
+                change.Changetile(1);
             }
         }
         else if (isDownTile)
@@ -185,57 +187,58 @@ public class MoveTile : MonoBehaviour
             {
                 if (isLeftTile)
                 {
-                    change.changetile(12);
+                    change.Changetile(12);
                 }
                 else
                 {
-                    change.changetile(6);
+                    change.Changetile(6);
                 }
             }
             else if (isLeftTile)
             {
-                change.changetile(7);
+                change.Changetile(7);
             }
             else
             {
-                change.changetile(2);
+                change.Changetile(2);
             }
         }
         else if (isLeftTile)
         {
             if (isRightTile)
             {
-                change.changetile(10);
+                change.Changetile(10);
             }
             else
             {
-                change.changetile(3);
+                change.Changetile(3);
             }
         }
         else if (isRightTile)
         {
-            change.changetile(4);
+            change.Changetile(4);
         }
 
     }
     public void Leftmove()
     {
         nowy -= 1;
-        stay();
+        eventsrc.Event_check(Map,nowx,nowy);
+        Stay();
     }
     public void Rightmove()
     {
         nowy += 1;
-        stay();
+        Stay();
     }
     public void Upmove()
     {
         nowx -= 1;
-        stay();
+        Stay();
     }
     public void Downmove()
     {
         nowx += 1;
-        stay();
+        Stay();
     }
 }

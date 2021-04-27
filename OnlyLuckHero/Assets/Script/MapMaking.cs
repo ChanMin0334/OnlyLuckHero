@@ -15,14 +15,14 @@ public class MapMaking : MonoBehaviour
     public void Awake()
     {
         Map = new List<List<int>>();
-        
+
         int tilex = Random.Range(0, size[stage] - 1);
         int tiley = Random.Range(0, size[stage] - 1);
 
-       makebasicmap(size[stage], way[stage], mapevent[stage], mapshop[stage], tilex, tiley, Map);
+        Makebasicmap(size[stage], way[stage], mapevent[stage], mapshop[stage], tilex, tiley, Map);
     }
 
-    public void makebasicmap(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map) //비어있는 맵 만들기
+    public void Makebasicmap(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map) //비어있는 맵 만들기
     {
         for (int i = 0; i < size; i++)
         {
@@ -32,14 +32,15 @@ public class MapMaking : MonoBehaviour
                 Map[i].Add(0);
             }
         }
-        mapmake(size, way, mapevent, mapshop, x, y, Map);
+        Mapmake(size, way, mapevent, mapshop, x, y, Map);
     }
-    public void mapmake(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map)  //가로세로의 길이, 길 개수, 이벤트등을 인자로 받는다.
+    public void Mapmake(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map)  //가로세로의 길이, 길 개수, 이벤트등을 인자로 받는다.
     {
         int maptile = 0;
         bool isdirsel = false; //방향선택확인
         bool istilesel = false;
         int dir;
+        int trynum = 0;
 
         while (!istilesel)
         {
@@ -52,7 +53,6 @@ public class MapMaking : MonoBehaviour
                         way--;
                         istilesel = true;
                     }
-
                     break;
 
                 case 2:
@@ -62,7 +62,6 @@ public class MapMaking : MonoBehaviour
                         mapevent--;
                         istilesel = true;
                     }
-
                     break;
                 case 3:
                     if (mapshop - 1 >= 0) //남아있는 mapshop 가 있다면
@@ -71,17 +70,16 @@ public class MapMaking : MonoBehaviour
                         mapshop--;
                         istilesel = true;
                     }
-
                     break;
             }
         }
-        int trynum = 0;
+        trynum = 0;
 
         while (true)
         {
             if (trynum > 20)
             {
-                resetpoint(size, way, mapevent, mapshop, x, y, Map);
+                Resetpoint(size, way, mapevent, mapshop, x, y, Map);
             }
             try
             {
@@ -155,14 +153,14 @@ public class MapMaking : MonoBehaviour
         }
         if (way == 0 && mapevent == 0 && mapshop == 0)
         {
-            makestart(size, Map);
+            Makestart(size, Map);
         }
         else
         {
-            mapmake(size, way, mapevent, mapshop, x, y, Map);   //재귀로 구현 근데 메모리 문제 심하면 리펙토링
+            Mapmake(size, way, mapevent, mapshop, x, y, Map);   //재귀로 구현 근데 메모리 문제 심하면 리펙토링
         }
     }
-    public void resetpoint(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map)
+    public void Resetpoint(int size, int way, int mapevent, int mapshop, int x, int y, List<List<int>> Map)
     {
         while (true)
         {
@@ -215,9 +213,9 @@ public class MapMaking : MonoBehaviour
                 break;
             }
         }
-        mapmake(size, way, mapevent, mapshop, x, y, Map);
+        Mapmake(size, way, mapevent, mapshop, x, y, Map);
     }
-    public void makestart(int size, List<List<int>> Map)
+    public void Makestart(int size, List<List<int>> Map)
     {
         bool isselect = false;
         int startx = 0;
@@ -227,14 +225,12 @@ public class MapMaking : MonoBehaviour
             startx = Random.Range(0, size - 1);
             starty = Random.Range(0, size - 1);
 
-            if(Map[startx][starty] != 0)
+            if (Map[startx][starty] != 0)
             {
                 isselect = true;
             }
         }
 
-        //MoveTile move = new MoveTile();
-
-        move.setting(startx, starty, size, Map);
+        move.Setting(startx, starty, size, Map);
     }
 }

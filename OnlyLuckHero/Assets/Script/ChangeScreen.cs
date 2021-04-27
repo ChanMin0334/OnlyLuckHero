@@ -22,7 +22,7 @@ public class ChangeScreen : MonoBehaviour
     public Sprite tile15;
     public Image background;
 
-    public void changetile(int tilenum)
+    public void Changetile(int tilenum)
     {
         switch (tilenum)
         {
@@ -71,7 +71,6 @@ public class ChangeScreen : MonoBehaviour
             case 15:
                 background.sprite = tile15;
                 break;
-
         }
     }
 }
