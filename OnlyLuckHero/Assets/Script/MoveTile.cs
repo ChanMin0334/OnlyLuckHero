@@ -15,14 +15,13 @@ public class MoveTile : MonoBehaviour
     public static List<List<int>> Map;
     public ChangeScreen change;
     public EventSrc eventsrc;
-    
+    static bool isLeftTile;
+    static bool isRightTile;
+    static bool isUpTile;
+    static bool isDownTile;
 
     public void Setting(int x, int y, int si, List<List<int>> map)   //전역변수로 저장해줌
     {
-        leftBtn = GameObject.Find("Left_btn").GetComponent<Button>();
-        rightBtn = GameObject.Find("Right_btn").GetComponent<Button>();
-        upBtn = GameObject.Find("Up_btn").GetComponent<Button>();
-        downBtn = GameObject.Find("Down_btn").GetComponent<Button>();
         Map = map;
         nowx = x;
         nowy = y;
@@ -31,10 +30,6 @@ public class MoveTile : MonoBehaviour
     }
     public void Stay()
     {
-        leftBtn = GameObject.Find("Left_btn").GetComponent<Button>();
-        rightBtn = GameObject.Find("Right_btn").GetComponent<Button>();
-        upBtn = GameObject.Find("Up_btn").GetComponent<Button>();
-        downBtn = GameObject.Find("Down_btn").GetComponent<Button>();
         Debug.Log(nowy + "/" + nowx);    //테스트 디버깅 코드
         var srt = "";
         for (int i = 0; i < size; i++)
@@ -46,12 +41,6 @@ public class MoveTile : MonoBehaviour
             }
             Debug.Log(srt);
         }                               //테스트 디버깅 코드
-
-        bool isLeftTile = false;
-        bool isRightTile = false;
-        bool isUpTile = false;
-        bool isDownTile = false;
-
         if (nowy - 1 >= 0)
         {
             if (Map[nowx][nowy - 1] != 0)
@@ -135,6 +124,30 @@ public class MoveTile : MonoBehaviour
             rightBtn.interactable = false;   //오른쪽버튼비활성화
             rightBtn.gameObject.GetComponent<Image>().enabled = false;
         }
+        Checkscreen();
+    }
+    public void Leftmove()
+    {
+        nowy -= 1;
+        eventsrc.Event_check(Map,nowx,nowy);
+    }
+    public void Rightmove()
+    {
+        nowy += 1;
+        eventsrc.Event_check(Map, nowx, nowy);
+    }
+    public void Upmove()
+    {
+        nowx -= 1;
+        eventsrc.Event_check(Map, nowx, nowy);
+    }
+    public void Downmove()
+    {
+        nowx += 1;
+        eventsrc.Event_check(Map, nowx, nowy);
+    }
+    public void Checkscreen()
+    {
 
         if (isUpTile)
         {
@@ -144,7 +157,7 @@ public class MoveTile : MonoBehaviour
                 {
                     if (isLeftTile)
                     {
-                        change.Changetile(15); 
+                        change.Changetile(15);
                     }
                     else
                     {
@@ -218,26 +231,5 @@ public class MoveTile : MonoBehaviour
         {
             change.Changetile(4);
         }
-
-    }
-    public void Leftmove()
-    {
-        nowy -= 1;
-        eventsrc.Event_check(Map,nowx,nowy);
-    }
-    public void Rightmove()
-    {
-        nowy += 1;
-        eventsrc.Event_check(Map, nowx, nowy);
-    }
-    public void Upmove()
-    {
-        nowx -= 1;
-        eventsrc.Event_check(Map, nowx, nowy);
-    }
-    public void Downmove()
-    {
-        nowx += 1;
-        eventsrc.Event_check(Map, nowx, nowy);
     }
 }
