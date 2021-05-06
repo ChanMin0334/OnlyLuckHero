@@ -224,21 +224,20 @@ public class MoveTile : MonoBehaviour
     {
         nowy -= 1;
         eventsrc.Event_check(Map,nowx,nowy);
-        Stay();
     }
     public void Rightmove()
     {
         nowy += 1;
-        Stay();
+        eventsrc.Event_check(Map, nowx, nowy);
     }
     public void Upmove()
     {
         nowx -= 1;
-        Stay();
+        eventsrc.Event_check(Map, nowx, nowy);
     }
     public void Downmove()
     {
         nowx += 1;
-        Stay();
+        eventsrc.Event_check(Map, nowx, nowy);
     }
 }
